@@ -1,4 +1,4 @@
-import React, {useState} from'react';
+import React from 'react';
 import InterviewerListItem from "components/InterviewerListItem";
 import 'components/InterviewerList.scss';
 
@@ -11,7 +11,7 @@ const InterviewerList = (props) => {
       name={interviewer.name}
       avatar={interviewer.avatar}
       selected={props.value === interviewer.id}
-      setInterviewer={() => onchange(interviewer.id)}
+      setInterviewer={() => props.setInterviewer(interviewer.id)}
     ></InterviewerListItem>
   }
   )
