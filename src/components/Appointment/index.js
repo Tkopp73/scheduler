@@ -6,12 +6,17 @@ import Show from './Show';
 import Empty from './Empty';
 
 
+
+
+
 const Appointment = (props) => {
 
-
+  const ifInterview = () => props.interview ? <Show student= {props.interview.student} interviewer={props.interview.interviewer}/> : <Empty/>;
 
   return (
     <article className="appointment">
+      <Header time={props.time}/>
+      {ifInterview()}
     </article>
   );
 };
