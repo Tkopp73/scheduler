@@ -30,4 +30,17 @@ return appointmentsForDay;
 }
 
 
-export default getAppointmentsForDay ;
+const getInterview = (state, interview) => {
+
+  if(interview) {
+    return {'student': interview.student, "interviewer": state.interviewers[interview.interviewer]}
+  } else {
+    return interview;
+  }
+
+}
+
+
+
+
+export { getAppointmentsForDay, getInterview };
