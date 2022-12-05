@@ -1,20 +1,12 @@
 {
-	"folders": [
-		{
-			"path": "../.."
-		},
-		{
-			"path": "../../../scheduler-api"
-		}
-	],
-  "settings": {
-    "prettier.enableDebugLogs": true,
-    "prettier.useTabs": true,
-    "files.autoSave": "onFocusChange"
-  },
-  "extensions": {
-    "recommendations": [
-      "esbenp.prettier-vscode"
-    ]
-  }
+  "folders": [
+    {
+      "name": "scheduler",
+      "path": "../.."
+    },
+    {
+      "name": "scheduler-api",
+      "path": "../../../scheduler-api"
+    }
+  ]
 }

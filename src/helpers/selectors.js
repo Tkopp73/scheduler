@@ -26,30 +26,46 @@ const getAppointmentsForDay = (state, day) => {
 };
 
 const getInterviewersForDay = (state, day) => {
-	let appointments = [];
-	let appointmentsForDay = [];
+	const interviewersForDay = [];
+	if (state.days[0]) {
+		let appointments = [];
+		let appointmentsForDay = [];
 
-	if (state.appointments) {
-		let appointmentObj = Object.values(state.appointments);
+		if (state.appointments) {
+			let appointmentObj = Object.values(state.appointments);
 
-		for (let theDay of state.days) {
-			if (day === theDay.name) {
-				appointments.push(theDay.appointments);
+			for (let theDay of state.days) {
+				if (day === theDay.name) {
+					appointments.push(theDay.appointments);
+				}
+			}
+
+			for (let appointment of appointments) {
+				for (let apptObj of appointmentObj) {
+					appointment.forEach((appt) => {
+						if (appt === apptObj.id) {
+							appointmentsForDay.push(apptObj);
+						}
+					});
+				}
 			}
 		}
 
-		for (let appointment of appointments) {
-			for (let apptObj of appointmentObj) {
-				appointment.forEach((appt) => {
-					if (appt === apptObj.id) {
-						appointmentsForDay.push(apptObj);
-					}
-				});
+		let mappedappointments = appointmentsForDay.map((appointment) => {
+			if (appointment.interview) {
+				return appointment.interview.interviewer;
+			}
+		});
+
+		let interviewerObj = Object.values(state.interviewers);
+
+		for (let interviewer of interviewerObj) {
+			if (mappedappointments.includes(interviewer.id)) {
+				interviewersForDay.push(interviewer);
 			}
 		}
 	}
-
-	return appointmentsForDay;
+	return interviewersForDay;
 };
 
 const getInterview = (state, interview) => {
