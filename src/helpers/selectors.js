@@ -15,7 +15,6 @@ const getInterviewersForDay = (state, day) => {
 };
 
 const getInterview = (state, interview) => {
-	console.log("HERE", interview);
 	return (
 		interview && {
 			...interview,
