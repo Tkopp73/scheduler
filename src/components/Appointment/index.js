@@ -7,6 +7,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
@@ -15,6 +16,9 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETE = "DELETE";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
+const sERROR = "sERROR";
+const dERROR = "dERROR";
 
 const Appointment = (props) => {
 	const { mode, transition, back } = useVisualMode(
@@ -31,7 +35,7 @@ const Appointment = (props) => {
 	};
 
 	const discardAppt = () => {
-		transition(DELETE);
+		transition(DELETE, true);
 		props.deleteInterview(props.id, transition);
 	};
 
@@ -45,6 +49,18 @@ const Appointment = (props) => {
 					onConfirm={discardAppt}
 				/>
 			)}
+			{mode === dERROR && (
+				<Error
+					message='Could not delete this interview'
+					onClose={back}
+				/>
+			)}
+			{mode === sERROR && (
+				<Error
+					message='Could not save this interview'
+					onClose={back}
+				/>
+			)}
 			{mode === DELETE && <Status message={DELETE} />}
 			{mode === SAVING && <Status message={SAVING} />}
 			{mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -52,12 +68,21 @@ const Appointment = (props) => {
 				<Show
 					student={props.interview.student}
 					interviewer={props.interview.interviewer}
-					onEdit={() => console.log("Clicked onEdit")}
+					onEdit={() => transition(EDIT)}
 					onDelete={() => transition(CONFIRM)}
 				/>
 			)}
 			{mode === CREATE && (
 				<Form
+					interviewers={props.interviewers}
+					onSave={save}
+					onCancel={back}
+				/>
+			)}
+			{mode === EDIT && (
+				<Form
+					student={props.interview.student}
+					interviewer={props.interview.interviewer}
 					interviewers={props.interviewers}
 					onSave={save}
 					onCancel={back}
