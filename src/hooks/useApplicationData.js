@@ -28,6 +28,19 @@ const useApplicationData = () => {
 		});
 	}, []);
 
+	const updateSpots = (state, newAppointements) => {
+		const dayIndex = state.days.findIndex((day) => day.name === state.day);
+		const currentDay = state.days[dayIndex];
+		const listOfAppointmentIds = currentDay.appointments;
+
+		const listOfFreeAppointments = listOfAppointmentIds.filter(
+			(id) => !newAppointements[id].interview
+		);
+
+		const spots = listOfFreeAppointments.length;
+		return [dayIndex, spots];
+	};
+
 	const bookInterview = (id, interview, transition) => {
 		const appointment = {
 			...state.appointments[id],
@@ -37,35 +50,40 @@ const useApplicationData = () => {
 			...state.appointments,
 			[id]: appointment,
 		};
-		setState({
-			...state,
-
-			appointments,
-		});
 
 		axios
 			.put(`http://localhost:8001/api/appointments/${id}`, { interview })
-			.then(() => transition("SHOW"))
+			.then(() => {
+				const [today, spots] = updateSpots(state, appointments);
+				const day = { ...state.days[today], spots: spots };
+				const days = [...state.days];
+				days.splice(today, 1, day);
+				setState({ ...state, appointments, days });
+				transition("SHOW");
+			})
 			.catch((err) => transition("sERROR", true));
 	};
 
-	const deleteInterview = (id, transition, interview = null) => {
+	const deleteInterview = (id, transition) => {
 		const appointment = {
 			...state.appointments[id],
-			interview: { ...interview },
+			interview: null,
 		};
 		const appointments = {
 			...state.appointments,
 			[id]: appointment,
 		};
-		setState({
-			...state,
-			appointments,
-		});
 
 		axios
 			.delete(`http://localhost:8001/api/appointments/${id}`)
-			.then(() => transition("EMPTY"))
+			.then(() => {
+				const [today, spots] = updateSpots(state, appointments);
+				const day = { ...state.days[today], spots: spots };
+				const days = [...state.days];
+				days.splice(today, 1, day);
+				setState({ ...state, appointments, days });
+				transition("EMPTY");
+			})
 			.catch((err) => transition("dERROR"), true);
 	};
 
