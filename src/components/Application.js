@@ -41,27 +41,34 @@ export default function Application(props) {
 	const dailyAppointments = getAppointmentsForDay(state, state.day);
 	const dailyInterviewers = getInterviewersForDay(state, state.day);
 
-	const schedule = dailyAppointments.map((appointment) => {
-		const interview = getInterview(state, appointment.interview);
-		const interviewers = dailyInterviewers;
+	const bookInterview = (id, interview) => {
+		console.log("inside bookInterview", id, interview);
+		const appointment = {
+			...state.appointments[id],
+			interview: { ...interview },
+		};
+		const appointments = {
+			...state.appointments,
+			[id]: appointment,
+		};
+		setState({
+			...state,
+			appointments,
+		});
+	};
 
-		if (appointment.interview) {
-			return (
-				<Appointment
-					key={appointment.id}
-					interviewer={interview}
-					interviewers={interviewers}
-					{...appointment}
-				/>
-			);
-		} else {
-			return (
-				<Appointment
-					key={appointment.id}
-					time={appointment.time}
-				/>
-			);
-		}
+	const schedule = dailyAppointments.map((appointment) => {
+		console.log("inside map", getInterview(state, appointment.interview));
+		const interviewersForDay = dailyInterviewers;
+		return (
+			<Appointment
+				key={appointment.id}
+				{...appointment}
+				interview={getInterview(state, appointment.interview)}
+				bookInterview={bookInterview}
+				interviewers={interviewersForDay}
+			/>
+		);
 	});
 
 	return (
