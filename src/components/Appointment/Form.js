@@ -38,7 +38,6 @@ const Form = (props) => {
 					autoComplete='off'
 					onSubmit={(event) => {
 						event.preventDefault();
-						console.log("event", event);
 					}}
 				>
 					<input
