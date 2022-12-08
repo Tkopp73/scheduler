@@ -4,20 +4,10 @@
 
 Install dependencies with `npm install`.
 
-## Running Webpack Development Server
+## To Start the Server
 
-```sh
-npm start
-```
+--npm start
 
-## Running Jest Test Framework
+## Welcome
 
-```sh
-npm test
-```
-
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
+-Thank you for your interest in my Scheduler App. I hope you will find that your interviews can be booked and saved. Also find that if more important matters come up, or you simply don't want to, you're able to cancel the interview.
