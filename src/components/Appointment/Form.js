@@ -7,17 +7,23 @@ const Form = (props) => {
 	const [interviewer, setInterviewer] = useState(props.interviewer || null);
 	const [error, setError] = useState("");
 
+
+  //clears the input feild and interviewers selected if applicable
 	const reset = () => {
 		setStudent("");
 		setInterviewer(null);
 	};
 
+
+  //returns to the previous view
 	const cancel = () => {
 		reset();
 		props.onCancel();
 		setError("");
 	};
 
+  
+  //validates the student name and interviewer is not empty
 	const validate = () => {
 		if (student === "") {
 			setError("Student name cannot be blank");

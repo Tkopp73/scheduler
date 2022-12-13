@@ -26,7 +26,7 @@ const useApplicationData = () => {
 			}));
 		});
 	}, []);
-
+  //update the display for spots remaining on the day
 	const updateSpots = (state, newAppointements) => {
 		const dayIndex = state.days.findIndex((day) => day.name === state.day);
 		const currentDay = state.days[dayIndex];
@@ -39,7 +39,7 @@ const useApplicationData = () => {
 		const spots = listOfFreeAppointments.length;
 		return [dayIndex, spots];
 	};
-
+  // Books an interview fot selected day
 	const bookInterview = (id, interview, transition) => {
 		const appointment = {
 			...state.appointments[id],
@@ -62,7 +62,7 @@ const useApplicationData = () => {
 			})
 			.catch((err) => transition("sERROR", true));
 	};
-
+  // Deletes an interview for the selected day
 	const deleteInterview = (id, transition) => {
 		const appointment = {
 			...state.appointments[id],
@@ -83,7 +83,7 @@ const useApplicationData = () => {
 				setState({ ...state, appointments, days });
 				transition("EMPTY");
 			})
-			.catch((err) => transition("dERROR"), true);
+			.catch((err) => transition("dERROR", true));
 	};
 
 	return {

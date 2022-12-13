@@ -10,21 +10,21 @@ import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
-const CREATE = "CREATE";
-const SAVING = "SAVING";
-const DELETE = "DELETE";
-const CONFIRM = "CONFIRM";
-const EDIT = "EDIT";
-const sERROR = "sERROR";
-const dERROR = "dERROR";
+const EMPTY = "EMPTY";//retrieves the empty view
+const SHOW = "SHOW";//retrieves the show view
+const CREATE = "CREATE";//retrieves the create view
+const SAVING = "SAVING";//retrieves the saving view
+const DELETE = "DELETE";//retrieves the delete view
+const CONFIRM = "CONFIRM";//retrieves the confirm view
+const EDIT = "EDIT";//retrieves the edit view
+const sERROR = "sERROR";//retrieves the saving error view
+const dERROR = "dERROR";//retrieves the deleting error view
 
 const Appointment = (props) => {
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
 	);
-
+    //saves the current student and interviewer into state
 	const save = (name, interviewer) => {
 		const interview = {
 			student: name,
@@ -33,7 +33,7 @@ const Appointment = (props) => {
 		transition(SAVING);
 		props.bookInterview(props.id, interview, transition);
 	};
-
+  //deletes the appointment
 	const discardAppt = () => {
 		transition(DELETE, true);
 		props.deleteInterview(props.id, transition);
