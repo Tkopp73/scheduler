@@ -12,7 +12,7 @@ const InterviewerList = (props) => {
 				avatar={interviewer.avatar}
 				selected={props.value === interviewer}
 				setInterviewer={() => props.setInterviewer(interviewer)}
-			></InterviewerListItem>
+			/>
 		);
 	});
 
