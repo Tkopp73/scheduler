@@ -12,12 +12,11 @@ const useApplicationData = () => {
 	const setDay = (day) => setState({ ...state, day });
 
 	useEffect(() => {
-		const baseUrl = "http://localhost:8001";
 
 		Promise.all([
-			axios.get(`${baseUrl}/api/days`),
-			axios.get(`${baseUrl}/api/appointments`),
-			axios.get(`${baseUrl}/api/interviewers`),
+			axios.get(`/api/days`),
+			axios.get(`/api/appointments`),
+			axios.get(`/api/interviewers`),
 		]).then((all) => {
 			setState((prev) => ({
 				...prev,
@@ -52,7 +51,7 @@ const useApplicationData = () => {
 		};
 
 		axios
-			.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+			.put(`/api/appointments/${id}`, { interview })
 			.then(() => {
 				const [today, spots] = updateSpots(state, appointments);
 				const day = { ...state.days[today], spots: spots };
